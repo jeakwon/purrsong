@@ -55,4 +55,14 @@ __add `setup.cfg`__
 description-file = README.md
 ```
 
+__current folder structure__
+```
+.
+├── .gitignore
+├── LICENSE
+├── README.md
+├── setup.cfg
+└── setup.py
+```
+
 __git commit, push__
