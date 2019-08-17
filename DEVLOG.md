@@ -39,7 +39,7 @@ from setuptools import setup, find_packages
 
 setup(
     name                = 'purrsong',
-    version             = '0.0.2',
+    version             = '0.0.1',
     description         = 'purrsong',
     author              = 'jeakwon',
     author_email        = 'onlytojay@gmail.com',
@@ -103,3 +103,9 @@ purrsong
 ```
 
 #### 6.2. updated package
+General procedure, when update
+1. change `purrsong` module
+2. change `setup.py` version (ex: 0.0.1->0.0.2)
+3. `python setup.py bdist_wheel` (creates new .whl)
+4. `twine upload dist\purrsong-0.0.2-py3-none-any.whl`
+5. git push
