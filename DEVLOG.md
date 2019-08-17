@@ -1,6 +1,6 @@
 
 
-# 2019-08-17 devlog
+# 2019-08-17
 ### 1. Created new environment with anaconda
 __anaconda version 4.7.10__
 ```
