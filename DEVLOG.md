@@ -52,7 +52,7 @@ setup(
 )
 ```
 
-#### 4.3. add `setup.cfg`__
+#### 4.3. add `setup.cfg`
 ```
 [metadata]
 description-file = README.md
@@ -68,4 +68,4 @@ description-file = README.md
 └── setup.py
 ```
 
-#### 4.5. git commit, push__
+#### 4.5. git commit, push
