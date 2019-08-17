@@ -88,3 +88,18 @@ For your information, twine requires PyPI id/pw. register PyPI first.
 ```
 pip install purrsong
 ```
+
+### 6. Add purrsong module
+#### 6.1. added `purrsong` folder with `__init__.py`
+```
+purrsong
+├── purrsong            # add folder
+    └── __init__.py     # add __init__.py
+├── .gitignore
+├── LICENSE
+├── README.md
+├── setup.cfg
+└── setup.py
+```
+
+#### 6.2. updated package
