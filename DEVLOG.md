@@ -109,3 +109,54 @@ General procedure, when update
 3. `python setup.py bdist_wheel` (creates new .whl)
 4. `twine upload dist\purrsong-0.0.2-py3-none-any.whl`
 5. git push
+
+#### 6.3. upgraded existing purrsong
+```
+pip install --upgrade purrsong
+```
+
+after sucessful upgrade, activate python kernel
+```python
+import purrsong
+```
+No error -> success
+
+### 7. display for PyPI package 
+added below code for PyPI display
+```python
+# read the contents of your README file
+from os import path
+this_directory = path.abspath(path.dirname(__file__))
+with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
+
+setup(
+    # ...
+    long_description                = long_description,
+    long_description_content_type   = 'text/markdown'
+)
+```
+
+### 8. Version control change
+#### 8.1. adding __version__ in `purrsong/__init__.py`
+__`__init__.py`__
+```python
+__version__ = 0.03
+```
+
+#### 8.2. change `setup.py` version from manual to automatic
+__`setup.py`__
+```python
+import purrsong # add this line
+setup(
+    version = purrsong.__version__, # add this line
+)
+```
+
+#### 8.3. updated package
+General procedure, when update
+1. change `purrsong` module
+2. change `purrsong.__init__.py` version (__version__ = '0.0.3')
+3. `python setup.py bdist_wheel` (creates new .whl)
+4. `twine upload dist\purrsong-0.0.3-py3-none-any.whl`
+5. git push
