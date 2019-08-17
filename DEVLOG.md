@@ -160,3 +160,11 @@ General procedure, when update
 3. `python setup.py bdist_wheel` (creates new .whl)
 4. `twine upload dist\purrsong-0.0.3-py3-none-any.whl`
 5. git push
+6. `pip install --upgrade purrsong`
+
+#### 8.4. check update
+```python
+import purrsong
+purrsong.__version__
+>>> '0.0.3'
+```
