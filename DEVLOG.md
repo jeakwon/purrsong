@@ -39,7 +39,7 @@ from setuptools import setup, find_packages
 
 setup(
     name                = 'purrsong',
-    version             = '0.0.1',
+    version             = '0.0.2',
     description         = 'purrsong',
     author              = 'jeakwon',
     author_email        = 'onlytojay@gmail.com',
