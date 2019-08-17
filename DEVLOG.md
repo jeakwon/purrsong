@@ -1,6 +1,11 @@
 
 
 # 2019-08-17
+### 0. Created this repo with
+* LICENSE : GNU v3
+* .gitignore : python
+* README.md : for description of this repo
+
 ### 1. Created new environment with anaconda
 __anaconda version 4.7.10__
 ```
