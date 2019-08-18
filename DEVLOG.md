@@ -80,9 +80,39 @@ General procedure, when update
 6. `pip install --upgrade purrsong`
 
 
+#### 0.4 Error detected, failed to `import downloader`
+How to fix
+change 
+```python 
+from downloader import download_file_from_google_drive
+```
+```python 
+from purrsong.downloader import download_file_from_google_drive
+```
 
+1. change `cats.py`
+2. change `purrsong.__init__.py` version (__version__ = '0.0.5')
+3. `python setup.py bdist_wheel` (creates new .whl)
+4. `twine upload dist\purrsong-0.0.4-py3-none-any.whl`
+5. git push
+6. `pip install --upgrade purrsong`
 
+#### 0.5 Error detected, failed to `import downloader`
+How to fix
+change 
+```python 
+from purrsong.downloader import download_file_from_google_drive
+```
+```python 
+from purrsong.datasets.downloader import download_file_from_google_drive
+```
 
+1. change `cats.py`
+2. change `purrsong.__init__.py` version (__version__ = '0.0.6')
+3. `python setup.py bdist_wheel` (creates new .whl)
+4. `twine upload dist\purrsong-0.0.4-py3-none-any.whl`
+5. git push
+6. `pip install --upgrade purrsong`
 
 # 2019-08-17
 ### 0. Create this repo with
