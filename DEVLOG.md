@@ -93,7 +93,7 @@ from purrsong.downloader import download_file_from_google_drive
 1. change `cats.py`
 2. change `purrsong.__init__.py` version (__version__ = '0.0.5')
 3. `python setup.py bdist_wheel` (creates new .whl)
-4. `twine upload dist\purrsong-0.0.4-py3-none-any.whl`
+4. `twine upload dist\purrsong-0.0.5-py3-none-any.whl`
 5. git push
 6. `pip install --upgrade purrsong`
 
@@ -110,7 +110,18 @@ from purrsong.datasets.downloader import download_file_from_google_drive
 1. change `cats.py`
 2. change `purrsong.__init__.py` version (__version__ = '0.0.6')
 3. `python setup.py bdist_wheel` (creates new .whl)
-4. `twine upload dist\purrsong-0.0.4-py3-none-any.whl`
+4. `twine upload dist\purrsong-0.0.6-py3-none-any.whl`
+5. git push
+6. `pip install --upgrade purrsong`
+
+#### 0.6 Error detected, failed to `import os`
+How to fix
+`import os` in `downloader.py`?
+
+1. change `downloader.py`
+2. change `purrsong.__init__.py` version (__version__ = '0.0.7')
+3. `python setup.py bdist_wheel` (creates new .whl)
+4. `twine upload dist\purrsong-0.0.7-py3-none-any.whl`
 5. git push
 6. `pip install --upgrade purrsong`
 
