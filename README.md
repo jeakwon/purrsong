@@ -1,13 +1,13 @@
 # purrsong
 
 # Create Anaconda Environment(Optional)
-```
+```console
 conda create -n purrsong python=3.6
 conda activate purrsong
 ```
 
 # Requirments
-```
+```console
 pip install tensorflow # tensorflow-gpu
 pip install opencv-python
 pip install tqdm
@@ -15,7 +15,7 @@ pip install requests
 ```
 
 # Installation
-```python
+```console
 pip install purrsong
 ```
 
