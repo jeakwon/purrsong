@@ -125,6 +125,16 @@ How to fix
 5. git push
 6. `pip install --upgrade purrsong`
 
+> Sucessfully managed download function of `cats.py`
+
+### 1. add extract cats.zip in cats.load_data() function
+
+
+
+
+
+
+
 # 2019-08-17
 ### 0. Create this repo with
 * LICENSE : GNU v3
