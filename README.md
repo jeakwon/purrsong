@@ -20,12 +20,10 @@ conda activate purrsong
 ```
 
 ## Requirments
-```console
-pip install tensorflow
-pip install opencv-python
-pip install tqdm
-pip install requests
-```
+* tensorflow
+* opencv-python
+* tqdm
+* requests
 
 ## Auto-download-extract-load of datasets, modelsets
 Below function automatically download data or models and save locally
