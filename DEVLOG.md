@@ -1,7 +1,60 @@
+# 2019-08-19
+### 0. Created functions for datasets or modelsets
+#### 0.1. `datasets`, `modelsets`, `utils` folder added
+```
+PURRSONG
+├── purrsong
+    ├── datasets                # NEW 
+        ├── __init__.py.py      # NEW 
+        └── cats.py             # NEW 
+    ├── modelsets               # NEW 
+        ├── __init__.py         # NEW 
+        ├── bbs.py              # NEW 
+        └── lmks.py             # NEW 
+    ├── utils                   # NEW 
+        ├── __init__.py         # NEW 
+        ├── downloader.py       # NEW 
+        └── extractor.py        # NEW 
+    ├── __init__.py
+    └── api.py                  # NEW, this is imported in __init__.py
+├── ...
+└── test.py                     # NEW, all test is perfomred here
+```
+> `cats.py` is responsible for downloading and extracting `cats.tar.gz` from google drive
+> `bbs.py` is responsible for downloading `bbs.h5` from google drive 
+> `lmks.py` is responsible for downloading `lmks.h5` from google drive 
+
+__Using `api.py` I made it simpler to access above files directory__ 
+```python
+# Example
+import purrsong as ps
+data = ps.load_cats()
+bbs = ps.load_bbs()
+lmks = ps.load_lmks()
+
+# Result
+print(data)
+>>> C:\Users\Jay\.purrsong\datasets\cats.tar
+print(bbs)
+>>> C:\Users\Jay\.purrsong\modelsets\bbs.h5
+print(lmks)
+>>> C:\Users\Jay\.purrsong\modelsets\lmks.h5
+```
+
+### 1. Version upgraded to 0.1.0 since new functions added
+
+1. added `datasets`, `modelsets`, `utils`, `api.py`.
+2. change `purrsong.__init__.py` version (__version__ = '0.1.0')
+3. `python setup.py bdist_wheel` (creates new .whl)
+4. `twine upload dist\purrsong-0.1.0-py3-none-any.whl`
+5. git push
+6. `pip install --upgrade purrsong`
+
+
 
 # 2019-08-18
 ### 0. Add cat.zip downloder
-#### 0.1 desired output
+#### 0.1. desired output
 Expected behavior with below codes
 ```python
 from purrsong.datasets import cats
@@ -10,7 +63,7 @@ cats.load_data()
 > Download cats.zip(2GB) if not exists in `~/.purrsong/datasets/cats.zip
 > Load datasets after download or with existing dataset
 
-#### 0.2 what to do
+#### 0.2. what to do
 1. add `datasets` folder
 2. add `__init__.py`, `cats.py`, `downloader.py` under `datasets` folder
 ```
@@ -70,7 +123,7 @@ def load_data():
     download_file_from_google_drive(file_id,'cats.zip')
 ```
 
-#### 0.3 updated package
+#### 0.3. updated package
 General procedure, when update
 1. change `purrsong` module
 2. change `purrsong.__init__.py` version (__version__ = '0.0.4')
@@ -80,7 +133,7 @@ General procedure, when update
 6. `pip install --upgrade purrsong`
 
 
-#### 0.4 Error detected, failed to `import downloader`
+#### 0.4. Error detected, failed to `import downloader`
 How to fix
 change 
 ```python 
@@ -124,15 +177,6 @@ How to fix
 4. `twine upload dist\purrsong-0.0.7-py3-none-any.whl`
 5. git push
 6. `pip install --upgrade purrsong`
-
-> Sucessfully managed download function of `cats.py`
-
-### 1. add extract cats.zip in cats.load_data() function
-
-
-
-
-
 
 
 # 2019-08-17

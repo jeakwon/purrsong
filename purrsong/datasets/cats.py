@@ -1,22 +1,35 @@
 import os
-import zipfile
-# from purrsong.datasets.utils import download_from_google_drive, extract_zip
-from utils import download_from_google_drive, extract_zip, extract_tar
+from purrsong.utils import google_drive_download, extract_tar
 
-def load_data():
-    url = "https://drive.google.com/a/korea.ac.kr/uc?export=download"
-    id = '1CYLFjew3Zf9agoSIbxPuIn1YDtgjc9dn'
-    savedir = os.path.join(os.path.expanduser('~'), '.purrsong','datasets')
-    filename = 'cats.tar.gz'
-    filepath = os.path.join(savedir, filename)
-    datadir = os.path.dirname(filepath)
+def load(fresh=False):
+    """Returns directory that contains cat images and face landmarks.
+    if not exist locally, download and extract automatically from google drive
     
-    download_from_google_drive(url, id, savedir, filename)
+    :param fresh: if True, proceed download and extract 
+    :type fresh: bool
+    :returns: data directory
+    """
+    destination = os.path.join(os.path.expanduser('~'), '.purrsong', 'datasets', 'cats.tar.gz')
+    datadir = os.path.splitext(destination)[0]
     
-def extract(filepath):
-    extract_tar(filepath)
+    if fresh:
+        id = '1CYLFjew3Zf9agoSIbxPuIn1YDtgjc9dn'
+        download_done = google_drive_download(id, destination)
+        if download_done:
+            extract_done = extract_tar(destination)
+            if extract_done:
+                os.remove(destination)
+        return datadir
 
-if __name__ == "__main__":
-    load_data()
-    # extract_data(filepath)
+    if not os.path.exists(datadir):
+        if os.path.isfile(destination):
+            try: # try extracting with existing file
+                extract_done = extract_tar(destination)
+                if extract_done:
+                    os.remove(destination)
+            except: # if corrupted, fresh download
+                load(fresh=True) # recursive
+        else:
+            load(fresh=True) # recursive
 
+    return datadir
