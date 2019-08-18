@@ -1,4 +1,14 @@
 
+# 2019-08-18
+### 0. Add cat.zip downloder
+Expected behavior with below codes
+```python
+from purrsong.datasets import cats
+cats.load_data()
+```
+> Download cats.zip(2GB) if not exists in `~/.purrsong/datasets/cats.zip
+> Load datasets after download or with existing dataset
+
 
 # 2019-08-17
 ### 0. Create this repo with
