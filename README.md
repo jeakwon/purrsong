@@ -32,9 +32,7 @@ Below function automatically download data or models and save locally
 If data is already exists, returns data directory or model filepath
 ```python
 import purrsong as ps
-# Load Data
 data = ps.load_cats()
-# Load Models
 bbs = ps.load_bbs()
 lmks = ps.load_lmks()
 ```
