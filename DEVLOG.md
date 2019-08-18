@@ -1,6 +1,7 @@
 
 # 2019-08-18
 ### 0. Add cat.zip downloder
+#### 0.1 desired output
 Expected behavior with below codes
 ```python
 from purrsong.datasets import cats
@@ -8,6 +9,79 @@ cats.load_data()
 ```
 > Download cats.zip(2GB) if not exists in `~/.purrsong/datasets/cats.zip
 > Load datasets after download or with existing dataset
+
+#### 0.2 what to do
+1. add `datasets` folder
+2. add `__init__.py`, `cats.py`, `downloader.py` under `datasets` folder
+```
+purrsong
+├── ...
+└── purrsong
+    ├── __init__.py
+    └── datasets
+        ├── __init__.py
+        ├── downloader.py
+        └── cats.py
+```
+3. code `downloader.py`
+```python 
+import requests
+
+def download_file_from_google_drive(id, destination):
+    URL = "https://drive.google.com/a/korea.ac.kr/uc?export=download"
+
+    session = requests.Session()
+
+    response = session.get(URL, params = { 'id' : id }, stream = True)
+    token = get_confirm_token(response)
+
+    if token:
+        params = { 'id' : id, 'confirm' : token }
+        response = session.get(URL, params = params, stream = True)
+    save_response_content(response, destination)    
+
+def get_confirm_token(response):
+    for key, value in response.cookies.items():
+        if key.startswith('download_warning'):
+            return value
+
+    return None
+
+def save_response_content(response, destination):
+    directory = os.path.join(os.path.expanduser('~'), '.purrsong','datasets')
+    os.makedirs(directory, exist_ok=True)
+
+    CHUNK_SIZE = 1024*1024
+
+    with open(os.path.join(directory, destination), "wb") as f:
+        for MB, chunk in enumerate(response.iter_content(CHUNK_SIZE), start=1):
+            if chunk: # filter out keep-alive new chunks
+                f.write(chunk)
+                print(f'{MB:} MB Downloaded,', end='\r')
+```
+
+4. code `cats.py`
+```python
+import os
+from downloader import download_file_from_google_drive
+
+def load_data():
+    file_id = '1n9AzQxoXQx8fGdew_7tuuFRTopmRzGas'
+    download_file_from_google_drive(file_id,'cats.zip')
+```
+
+#### 0.3 updated package
+General procedure, when update
+1. change `purrsong` module
+2. change `purrsong.__init__.py` version (__version__ = '0.0.4')
+3. `python setup.py bdist_wheel` (creates new .whl)
+4. `twine upload dist\purrsong-0.0.4-py3-none-any.whl`
+5. git push
+6. `pip install --upgrade purrsong`
+
+
+
+
 
 
 # 2019-08-17
