@@ -50,7 +50,10 @@ print(lmks)
 5. git push
 6. `pip install --upgrade purrsong`
 
-
+### 2. git create branch test
+```git
+git branch test
+```
 
 # 2019-08-18
 ### 0. Add cat.zip downloder
