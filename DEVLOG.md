@@ -53,6 +53,9 @@ print(lmks)
 ### 2. git create branch test
 ```git
 git branch test
+git checkout test
+git commit
+git push
 ```
 
 # 2019-08-18
