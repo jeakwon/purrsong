@@ -52,10 +52,10 @@ print(lmks)
 
 ### 2. git create branch test
 ```git
-git branch test
-git checkout test
-git commit
-git push
+git branch test # branch create
+git checkout test # set to test branch
+git commit # test branch commit
+git push # test branch push
 ```
 
 # 2019-08-18
