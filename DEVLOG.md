@@ -58,6 +58,15 @@ git commit
 git push
 ```
 
+### 3. working with git branch
+#### 3.1. 
+```git
+git branch develop
+git checkout develop
+git commit
+git push
+```
+
 # 2019-08-18
 ### 0. Add cat.zip downloder
 #### 0.1. desired output
