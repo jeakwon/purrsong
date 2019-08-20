@@ -58,6 +58,7 @@ def list_datasets(show=True, id='1kGtEoB--o_1cN0Zk9pogFsXqaISJUsQc'):
         os.path.expanduser('~'), '.purrsong', 'datasets_list.csv')
 
     if not os.path.isfile(datasets_list_csv):
+        print('Downloading up-to-date available datasets list')
         google_drive_download(id, datasets_list_csv)
         new_datasets_list = pd.read_csv(datasets_list_csv, index_col=0)
         if show: print(new_datasets_list.index)
@@ -66,6 +67,7 @@ def list_datasets(show=True, id='1kGtEoB--o_1cN0Zk9pogFsXqaISJUsQc'):
     else:
         old_datasets_list = pd.read_csv(datasets_list_csv, index_col=0).copy()
         try:
+            print('Downloading up-to-date available datasets list')
             google_drive_download(id, datasets_list_csv)
             new_datasets_list = pd.read_csv(datasets_list_csv, index_col=0)
             if not old_datasets_list.equals(new_datasets_list):

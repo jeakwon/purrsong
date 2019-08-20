@@ -10,7 +10,7 @@ pip install purrsong
 ```python
 import purrsong as ps
 ps.__version__
->>> 0.1.0
+>>> 0.1.2
 ```
 
 ## Create Anaconda Environment(Optional)
@@ -32,7 +32,7 @@ If data is already exists, returns data directory or model filepath
 ```python
 import purrsong as ps
 ps.list_datasets()
-data = ps.load_dataset('cat')
+data = ps.load_dataset('cats')
 ps.list_models()
 bbs = ps.load_model('bbs')
 ```

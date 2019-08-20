@@ -39,6 +39,7 @@ def list_models(show=True, id='13rBwrVEoU_aoF-KytmOJILD7Y8Tl8Vs1'):
         os.path.expanduser('~'), '.purrsong', 'models_list.csv')
 
     if not os.path.isfile(models_list_csv):
+        print('Downloading up-to-date available models list')
         google_drive_download(id, models_list_csv)
         new_models_list = pd.read_csv(models_list_csv, index_col=0)
         if show: print(new_models_list.index)
@@ -47,6 +48,7 @@ def list_models(show=True, id='13rBwrVEoU_aoF-KytmOJILD7Y8Tl8Vs1'):
     else:
         old_models_list = pd.read_csv(models_list_csv, index_col=0)
         try:
+            print('Downloading up-to-date available models list')
             google_drive_download(id, models_list_csv)
             new_models_list = pd.read_csv(models_list_csv, index_col=0)
             if not old_models_list.equals(new_models_list):

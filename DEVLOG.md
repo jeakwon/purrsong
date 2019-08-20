@@ -99,7 +99,7 @@ import purrsong as ps
 data = ps.load_dataset('cat')
 bbs = ps.load_model('bbs')
 ```
-### 2. Version upgraded to 0.1.0 since new functions added
+### 2. Version upgraded to 0.1.1
 
 1. added fully automated google drive dataset model monitoring system
 2. change `purrsong.__init__.py` version (__version__ = '0.1.1')
