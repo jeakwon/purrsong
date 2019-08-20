@@ -1,8 +1,6 @@
 import purrsong as ps
+from purrsong.models import load
 
-data = ps.load_cats()
-bbs = ps.load_bbs()
-lmks = ps.load_lmks()
-print(data)
-print(bbs)
-print(lmks)
+if __name__ == "__main__":
+    bbs_model = load('bbs.h5')
+

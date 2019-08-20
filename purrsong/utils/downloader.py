@@ -31,7 +31,6 @@ def google_drive_download(id, destination):
     total_size = int(response.headers.get('content-length', 0))
     os.makedirs(os.path.dirname(destination), exist_ok=True)
 
-    print('Start google_drive_download')
     with tqdm(desc=destination, total=total_size, unit='B', unit_scale=True) as pbar:
         with open(destination, 'wb') as f:
             for chunk in response.iter_content(CHUNK_SIZE):
