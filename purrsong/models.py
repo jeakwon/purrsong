@@ -20,7 +20,7 @@ def load(filename, fresh=False):
     """
 
     model_path = os.path.join(
-        os.path.expanduser('~'), '.purrsong', 'modelsets', filename)
+        os.path.expanduser('~'), '.purrsong', 'models', filename)
     
     if not os.path.isfile(model_path):
         print(f'Model not exist at {model_path}')

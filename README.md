@@ -31,6 +31,6 @@ If data is already exists, returns data directory or model filepath
 ```python
 import purrsong as ps
 data = ps.load_cats()
-bbs = ps.load_bbs()
-lmks = ps.load_lmks()
+bbs = ps.load_model('bbs.h5')
+lmks = ps.load_model('lmks.h5')
 ```
