@@ -24,13 +24,15 @@ conda activate purrsong
 * opencv-python
 * tqdm
 * requests
+* pandas
 
 ## Auto-download-extract-load of datasets, modelsets
 Below function automatically download data or models and save locally
 If data is already exists, returns data directory or model filepath
 ```python
 import purrsong as ps
-data = ps.load_cats()
-bbs = ps.load_model('bbs.h5')
-lmks = ps.load_model('lmks.h5')
+ps.list_datasets()
+data = ps.load_dataset('cat')
+ps.list_models()
+bbs = ps.load_model('bbs')
 ```

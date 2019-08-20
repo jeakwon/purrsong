@@ -1,7 +1,7 @@
 import purrsong as ps
-from purrsong.models import load
-
+import os
+import pandas as pd
+from purrsong.utils.downloader import google_drive_download
 if __name__ == "__main__":
-    # bbs_model = load('bbs.h5')
-    bbs_model = load('lmks.h5')
-
+    ps.load_data('cats')
+    ps.load_model('bbs')

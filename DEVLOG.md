@@ -1,3 +1,106 @@
+# 2019-08-21
+### 0. Generalized datasets, models module.
+#### 0.1. Created google dirve json files
+`google_drive_datasets.json`, `and google_drive_models.json` added.
+Adding new datasets or model in this list will be able to download and load easily.
+
+#### 0.2. Changed method. no jsonfiles.
+
+### 1. Fully automatic monitoring of models, datasets upload in google drive.
+#### 1.1. google drive monitoring spreadsheet.
+
+below codes edits `datasets_list.csv` file by list up all files in 
+datasets folder in google drive, by monitoring with spreadsheet scripts in
+every 1min interval.
+
+```javascript
+function listDir() {
+  var folderName = 'datasets';
+  var folder = DriveApp.getFoldersByName(folderName).next();
+  var files = folder.getFiles();
+  var sheet = SpreadsheetApp.getActiveSheet();
+  sheet.clear()
+  
+  var file;
+  var name;
+  var fileName;
+  var fileId;
+  
+  sheet.appendRow(['name', 'filename', 'id']);
+  while(files.hasNext()){
+    file = files.next();
+    fileName = file.getName();
+    name = fileName.split('.')[0]
+    fileId = file.getId();
+    sheet.appendRow([name, fileName, fileId]);
+  }
+  
+  
+  var purrsongFolder = DriveApp.getFoldersByName('purrsong').next();
+  var csvFile = convertRangeToCsvFile_(fileName, sheet);
+  var csvFileName = folderName+'_list.csv';
+  var csvFiles = purrsongFolder.getFilesByName(csvFileName);
+  if(csvFiles.hasNext()){
+      csvFiles.next().setContent(csvFile);
+  }
+
+};
+
+function convertRangeToCsvFile_(csvFileName, sheet) {
+  // get available data range in the spreadsheet
+  var activeRange = sheet.getDataRange();
+  try {
+    var data = activeRange.getValues();
+    var csvFile = undefined;
+
+    // loop through the data in the range and build a string with the csv data
+    if (data.length > 1) {
+      var csv = "";
+      for (var row = 0; row < data.length; row++) {
+        for (var col = 0; col < data[row].length; col++) {
+          if (data[row][col].toString().indexOf(",") != -1) {
+            data[row][col] = "\"" + data[row][col] + "\"";
+          }
+        }
+
+        // join each row's columns
+        // add a carriage return to end of each row, except for the last one
+        if (row < data.length-1) {
+          csv += data[row].join(",") + "\r\n";
+        }
+        else {
+          csv += data[row];
+        }
+      }
+      csvFile = csv;
+    }
+    return csvFile;
+  }
+  catch(err) {
+    Logger.log(err);
+    Browser.msgBox(err);
+  }
+}
+```
+
+#### 1.2. Usage
+1. Add `*.tar.gz` dataset to google drive `purrsong/datasets` folder
+2. Add `*.h5` model to google drive `purrsong/models` folder
+3. wait few minutes since list is updated every 1min
+4. check available datasets or models by
+```python
+import purrsong as ps
+ps.list_datasets()
+ps.list_models()
+```
+5. load datasets, or models
+```python
+import purrsong as ps
+data = ps.load_dataset('cat')
+bbs = ps.load_model('bbs')
+```
+
+
 # 2019-08-19
 ### 0. Created functions for datasets or modelsets
 #### 0.1. `datasets`, `modelsets`, `utils` folder added
