@@ -10,7 +10,7 @@ pip install purrsong
 ```python
 import purrsong as ps
 ps.__version__
->>> 0.1.2
+>>> 0.1.3
 ```
 
 ## Create Anaconda Environment(Optional)

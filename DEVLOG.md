@@ -108,12 +108,43 @@ bbs = ps.load_model('bbs')
 5. git push
 6. `pip install --upgrade purrsong`
 
-### 2. Version upgraded to 0.1.2 (hotfix)
+### 3. Version upgraded to 0.1.2 (hotfix)
 
 1. minor things changed
 2. change `purrsong.__init__.py` version (__version__ = '0.1.2')
 3. `python setup.py bdist_wheel` (creates new .whl)
 4. `twine upload dist\purrsong-0.1.2-py3-none-any.whl`
+5. git push
+6. `pip install --upgrade purrsong`
+
+### 4. added method `extract` in `purrsong>utils>extractor.py`
+
+```python
+def extract(src, cleanup_src=True):
+    """Extract file by infer
+    
+    :param src: .zip|.tar|.tar.gz|.tar.bz2|.tar.xz file
+    :type src: str
+    :param cleanup_src: if True, remove src file after extraction
+    :type cleanup_src: bool
+    :returns: True if extract completed
+    """
+    extract_done = False
+    if zipfile.is_zipfile(src):
+        extract_done = extract_zip(src)
+    elif tarfile.is_tarfile(src):
+        extract_done = extract_tar(src)
+    if cleanup_src and extract_done:
+        os.remove(src)
+    return extract_done
+```
+
+### 3. Version upgraded to 0.1.3 (hotfix)
+
+1. minor things changed
+2. change `purrsong.__init__.py` version (__version__ = '0.1.3')
+3. `python setup.py bdist_wheel` (creates new .whl)
+4. `twine upload dist\purrsong-0.1.3-py3-none-any.whl`
 5. git push
 6. `pip install --upgrade purrsong`
 
