@@ -139,7 +139,7 @@ def extract(src, cleanup_src=True):
     return extract_done
 ```
 
-### 3. Version upgraded to 0.1.3 (hotfix)
+### 5. Version upgraded to 0.1.3 (hotfix)
 
 1. minor things changed
 2. change `purrsong.__init__.py` version (__version__ = '0.1.3')
@@ -147,6 +147,18 @@ def extract(src, cleanup_src=True):
 4. `twine upload dist\purrsong-0.1.3-py3-none-any.whl`
 5. git push
 6. `pip install --upgrade purrsong`
+
+### 6. git branch merge when behind of master
+[link](https://stackoverflow.com/questions/34118404/what-i-can-do-to-resolve-1-commit-behind-master)
+```git
+git checkout master
+git pull 
+git checkout develop
+git merge master
+git push
+```
+
+
 
 # 2019-08-19
 ### 0. Created functions for datasets or modelsets
