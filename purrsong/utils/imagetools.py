@@ -3,57 +3,82 @@ import cv2
 import numpy as np
 from purrsong import models
 
-class CatFaceDetector(models.load('bbs')):
-    def __init__(self):
-        pass
+class CatFaceDetector:
+    def __init__(self, model):
+        self.model = model
     
-    def detect(self, src, dst):
+    def detect(self, src, dst=None, factor=1.7):
         image_input     = cv2.imread(os.path.join(src))
         model_input     = self.preprocess(image_input)
         model_output    = self.predict(model_input)
-        image_output    = self.postprocess(model_output)
-        cv2.imwrite(dst, image_output)
+        image_output    = self.postprocess(model_output, image_input, factor)
+        if dst:
+            cv2.imwrite(dst, image_output)
         return image_output
 
     def preprocess(self, image_input):
-        _, *input_shape = self.input_shape
-        model_input     = self._resize_and_padding(image_input, input_shape)
+        image_input = image_input/255
+        model_input = self._fit_model(image_input)
         return model_input
 
-    def _resize_and_padding(self, src, dst, color=[0, 0, 0]):
+    def predict(self, model_input):
+        return self.model.predict(model_input)
 
-        # (height, width) format
-        h_src, w_src = src.shape[:2]
-        h_dst, w_dst = dst.shape[:2]
-        ratio   = max([h_dst, w_dst])/max([h_src, w_src])
-        h_new, w_new = int(h_src*ratio), int(w_src*ratio)
-
-        # (width, height) format
-        resized_img = cv2.resize(src, (w_new, h_new))
-
-        dh, dw = (h_new-h_dst), (w_new-w_dst) # delta_h, delta_w
-        top, left = int(dh/2), int(dw/2) # top, left
-        bottom, right = int(dh-top), int(dw-left) # bottom, right
-
-        model_input = cv2.copyMakeBorder(resized_img, 
-            top, bottom, left, right, cv2.BORDER_CONSTANT, value=color)
-        offset  = np.array([top, left])
-        self.params = {
-            'ratio'     : ratio,
-            'offset'    : offset,
-        }
-        return model_input
-
-    def postprocess(self, model_output):
-        image_output = self._reverse_translocation(loc=model_output)
+    def postprocess(self, model_output, image_input, factor):
+        xy_pairs        = model_output[0].reshape((-1, 2))
+        XY_pairs        = self._reverse_translocation(xy_pairs)
+        lazy_bb         = self._get_lazy_bb(bb=XY_pairs, factor=factor)
+        x_min, y_min    = lazy_bb[0]
+        x_max, y_max    = lazy_bb[1]
+        image_output    = image_input[y_min:y_max, x_min:x_max]
         return image_output
+    
+    def _fit_model(self, img):        
+        _, *input_shape = self.model.input_shape
+        img             = self._resize_and_padding(img, input_shape[:2])
+        model_input     = img.reshape(1, *input_shape)
+        return model_input
+    
+    def _resize_and_padding(self, src, size, color=[0, 0, 0]):
+        self.params = {}
+        
+        # resize image. h: height, w: width, src: source, dst: destination
+        h_src, w_src = src.shape[:2]
+        h_dst, w_dst = size[:2]
+        ratio        = max(h_dst, w_dst)/max(h_src, w_src)
+        self.params['ratio'] = ratio
+        h_new, w_new = int(h_src*ratio), int(w_src*ratio)
+        resized_img = cv2.resize(src, (w_new, h_new)) # (width, height) format
 
-    def _reverse_translocation(self, loc):
+        # padding image. t: top, b: bottom, l: left, r: right, d: delta
+        dh, dw = (h_dst-h_new), (w_dst-w_new)
+        t, l = int(dh/2), int(dw/2), 
+        b, r = int(dh-t), int(dw-l), 
+        offset  = np.array([l, t])
+        self.params['offset'] = offset
+        padded_img = cv2.copyMakeBorder(resized_img, t, b, l, r, cv2.BORDER_CONSTANT, value=color)
+        return padded_img
+
+    def _reverse_translocation(self, xy_pairs):
         ratio   = self.params['ratio']
         offset  = self.params['offset']
 
-        x_min, y_min, x_max, y_max = loc[0]
-        pred_bb = np.array([[x_min, y_min],[x_max, y_max]])
-        orig_bb = ((pred_bb - offset)/ratio).astype(np.int)
+        # (x, y) -> (X, Y)
+        XY_pairs = ((xy_pairs - offset)/ratio).astype(np.int) 
+        return XY_pairs
 
-        # 이어서
+    
+    def _get_lazy_bb(self, bb, factor=1):
+        x_min, y_min = bb[0]
+        x_max, y_max = bb[1]
+
+        x = x_max - x_min
+        y = y_max - y_min
+        dx  = int(x*(factor-1)/2)
+        dy  = int(y*(factor-1)/2)
+
+        lazy_bb = np.array(
+            [[x_min-dx, y_min-dy], 
+            [x_max+dx, y_max+dy]])
+        lazy_bb = lazy_bb.clip(0, lazy_bb.max())
+        return lazy_bb
