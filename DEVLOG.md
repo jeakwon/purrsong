@@ -1,3 +1,48 @@
+# cats dataset feature update 2019-08-26
+
+## new feature in `purrsong.datasets.cats.Cats`
+with landmark datea, this method returns face image array, with given factor
+
+### How to use
+```python
+import purrsong as ps
+cats = ps.load_cats()
+
+cat = cats(0)         # or cats(idx=0, factor=1.7)
+
+cat['image']          # cats.image(0)
+cat['landmark']       # cats.landmark(0)
+cat['face']           # cats.face(0, factor=1.7)
+cat['face_bb']        # cats.face_bb(0, factor=1.7)
+cat['face_img']       # cats.face_img(0, factor=1.7)
+cat['face_lmk']       # cats.face_lmk(0, factor=1.7)
+cat['eye']            # cats.eye(0, factor=1.7)
+cat['left_eye_bb']    # cats.left_eye_bb(0, factor=1.7)
+cat['left_eye_img']   # cats.left_eye_img(0, factor=1.7)
+cat['right_eye_bb']   # cats.right_eye_bb(0, factor=1.7)
+cat['right_eye_img']  # cats.right_eye_img(0, factor=1.7)
+cat['nose']           # cats.nose(0, factor=1.7)
+cat['nose_bb']        # cats.nose_bb(0, factor=1.7)
+cat['nose_img']       # cats.nose_img(0, factor=1.7)
+cat['ear']            # cats.ear(0, factor=1.7)
+cat['left_ear_bb']    # cats.left_ear_bb(0, factor=1.7)
+cat['left_ear_img']   # cats.left_ear_img(0, factor=1.7)
+cat['right_ear_bb']   # cats.right_ear_bb(0, factor=1.7)
+cat['right_ear_img']  # cats.right_ear_img(0, factor=1.7)
+```
+left dict form is much more intuitive and good 
+when you have to handle many of features at same time.
+right method way is good when you access specific data type.
+
+
+1. updated `purrsong\datasets\cats.py`
+2. change `purrsong.__init__.py` version (__version__ = '0.1.6')
+3. `python setup.py bdist_wheel` (creates new .whl)
+4. `twine upload dist\purrsong-0.1.6-py3-none-any.whl`
+5. git push
+6. `pip install --upgrade purrsong`
+
+
 # cats dataset feature update 2019-08-25
 
 ## (minor)changed image array from BGR to RGB
