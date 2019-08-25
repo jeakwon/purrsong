@@ -49,7 +49,7 @@ def load(name, fresh=False):
 
     return datadir
 
-def list_datasets(query=None, fresh=False, id='1kGtEoB--o_1cN0Zk9pogFsXqaISJUsQc'):
+def list_datasets(fresh=False, id='1kGtEoB--o_1cN0Zk9pogFsXqaISJUsQc'):
     """list all available _datasets by monitoring google drive.
     :param id: _datasets_list.csv file id in google drive
     :type id: str

@@ -31,8 +31,7 @@ Below function automatically download data or models and save locally
 If data is already exists, returns data directory or model filepath
 ```python
 import purrsong as ps
-ps.list_datasets()
-data = ps.load_dataset('cats')
-ps.list_models()
-bbs = ps.load_model('bbs')
+cats = ps.load_catS()
+cats[0]
+>>>
 ```

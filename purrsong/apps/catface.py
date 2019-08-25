@@ -37,11 +37,13 @@ class CatFaceDetector:
         image_input     = self.detect(src)
         model_input     = self.preprocess(image_input)
         model_output    = self.lmks.predict(model_input)
-        lmks_output    = self.lmks_postprocess(model_output, image_input, factor)
+        lmks_output     = self.lmks_postprocess(model_output, image_input, factor)
         if dst:
             with open(dst, 'w') as f:
+                f.write(str(9))
                 for lmks in lmks_output:
-                    f.write(str(lmks))
+                    f.write(' ')
+                    f.write(str(lmks[0]))
         return lmks_output
 
     def preprocess(self, image_input):
