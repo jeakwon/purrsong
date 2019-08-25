@@ -31,7 +31,14 @@ Below function automatically download data or models and save locally
 If data is already exists, returns data directory or model filepath
 ```python
 import purrsong as ps
-cats = ps.load_catS()
-cats[0]
->>>
+import matplotlib.pyplot as plt
+
+cats = ps.load_cats()
+cat = cats[5]
+img = cat['image']
+lmk = cat['landmark']
+
+plt.imshow(img)
+plt.scatter(lmk[:,0], lmk[:,1])
+plt.show()
 ```
