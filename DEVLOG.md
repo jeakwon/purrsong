@@ -24,6 +24,16 @@ cats.image(0)
 cats.landmark(0)
 ```
 
+### 1. Version upgraded to 0.1.0 since new functions added
+
+1. added `cats.py`
+2. change `purrsong.__init__.py` version (__version__ = '0.1.4')
+3. `python setup.py bdist_wheel` (creates new .whl)
+4. `twine upload dist\purrsong-0.1.4-py3-none-any.whl`
+5. git push
+6. `pip install --upgrade purrsong`
+
+
 # 2019-08-21
 ### 0. Generalized datasets, models module.
 #### 0.1. Created google dirve json files
