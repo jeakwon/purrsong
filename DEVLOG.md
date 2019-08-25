@@ -1,3 +1,6 @@
+# TODO LIST
+1. In `purrsong/purrsong/apps/catface.py`, with `extract` function, change landmark save method to np.save('*.npy', arr)
+
 # cats dataset feature update 2019-08-26
 
 ## new feature in `purrsong.datasets.cats.Cats`
