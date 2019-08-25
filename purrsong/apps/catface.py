@@ -107,11 +107,11 @@ class CatFaceDetector:
 
         x = x_max - x_min
         y = y_max - y_min
-        dx  = int(x*(factor-1)/2)
-        dy  = int(y*(factor-1)/2)
+        dx  = x*(factor-1)/2
+        dy  = y*(factor-1)/2
 
         lazy_bb = np.array(
             [[x_min-dx, y_min-dy], 
             [x_max+dx, y_max+dy]])
-        lazy_bb = lazy_bb.clip(0, lazy_bb.max())
+        lazy_bb = lazy_bb.clip(0, lazy_bb.max()).round().astype(int)
         return lazy_bb

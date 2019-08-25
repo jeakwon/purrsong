@@ -1,3 +1,28 @@
+# cats dataset feature update 2019-08-25
+
+## (minor)changed image array from BGR to RGB
+## new feature `purrsong.datasets.cats.Cats.face`
+with landmark datea, this method returns face image array, with given factor
+
+### How to use
+```python
+import purrsong as ps
+cats = ps.load_cats()
+cats.face(0)
+>>> # np.array img
+cats.face(0, factor=1)
+>>> # np.array img with tightly bounded to landmark
+```
+
+1. updated `purrsong\datasets\cats.py`
+2. change `purrsong.__init__.py` version (__version__ = '0.1.5')
+3. `python setup.py bdist_wheel` (creates new .whl)
+4. `twine upload dist\purrsong-0.1.5-py3-none-any.whl`
+5. git push
+6. `pip install --upgrade purrsong`
+
+
+
 # 2019-08-25
 ### 0. relaced cats dataset
 #### if previous data exists do below
