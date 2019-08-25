@@ -1,3 +1,29 @@
+# 2019-08-25
+### 0. relaced cats dataset
+#### if previous data exists do below
+```python 
+import purrsong as ps
+ps.list_datasets(fresh=True)
+ps.load_cats(fresh=True)
+```
+
+#### handling dataset
+```python
+import purrsong as ps
+
+cats = ps.load_cats()
+# tatal data num
+len(cats)
+
+# index 0 data
+cats[0]['image']
+cats[0]['landmark']
+
+# same with above
+cats.image(0)
+cats.landmark(0)
+```
+
 # 2019-08-21
 ### 0. Generalized datasets, models module.
 #### 0.1. Created google dirve json files
