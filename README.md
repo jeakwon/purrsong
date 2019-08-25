@@ -25,6 +25,7 @@ conda activate purrsong
 * tqdm
 * requests
 * pandas
+* matplotlib
 
 ## Auto-download-extract-load of datasets, modelsets
 Below function automatically download data or models and save locally
@@ -39,7 +40,7 @@ ps.load_model('bbs') # or ps.load_model('bbs', fresh=True)
 
 dataset_list = ps.list_datasets() # or ps.list_datasets(fresh=True)
 print(dataset_list)
-ps.load_dataset('cat')
+ps.load_dataset('cat') # or ps.load_dataset('cat', fresh=True)
 ```
 
 ## Manipulating cats dataset
@@ -112,6 +113,6 @@ cat['right_ear_bb']   # cats.right_ear_bb(0, factor=1.7)
 cat['right_ear_img']  # cats.right_ear_img(0, factor=1.7)
 ```
 left dict form is much more intuitive and good 
-when you have to handle many of features at same time.
-right method way is good when you access specific data type.
+when you have to handle many of features at the same time.  
+right method way is good when you access specific feature.
 
