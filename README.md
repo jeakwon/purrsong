@@ -26,6 +26,7 @@ conda activate purrsong
 * requests
 * pandas
 * matplotlib
+* scipy
 
 ## Auto-download-extract-load of datasets, modelsets
 Below function automatically download data or models and save locally
@@ -115,4 +116,18 @@ cat['right_ear_img']  # cats.right_ear_img(0, factor=1.7)
 left dict form is much more intuitive and good 
 when you have to handle many of features at the same time.  
 right method way is good when you access specific feature.
+
+#### Style Transfer
+```python
+
+    content_path = ".../cat.jpg"
+    style_path = ".../awesome_style.jpg"
+    dst = ".../cat"
+    st = ps.StyleTransfer(content_path, style_path, dst, 
+                          iterations=20, content_weight=0.25, style_weight=1.5, 
+                          total_variation_weight=1e-4, img_height=400)
+    st.transfer_image()
+    
+```
+
 
