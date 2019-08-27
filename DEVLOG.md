@@ -1,3 +1,274 @@
+# TODO LIST
+1. In `purrsong/purrsong/apps/catface.py`, with `extract` function, change landmark save method to np.save('*.npy', arr)
+
+# cats dataset feature update 2019-08-26
+
+## new feature in `purrsong.datasets.cats.Cats`
+with landmark datea, this method returns face image array, with given factor
+
+### How to use
+```python
+import purrsong as ps
+cats = ps.load_cats()
+
+cat = cats(0)         # or cats(idx=0, factor=1.7)
+
+cat['image']          # cats.image(0)
+cat['landmark']       # cats.landmark(0)
+cat['face']           # cats.face(0, factor=1.7)
+cat['face_bb']        # cats.face_bb(0, factor=1.7)
+cat['face_img']       # cats.face_img(0, factor=1.7)
+cat['face_lmk']       # cats.face_lmk(0, factor=1.7)
+cat['eye']            # cats.eye(0, factor=1.7)
+cat['left_eye_bb']    # cats.left_eye_bb(0, factor=1.7)
+cat['left_eye_img']   # cats.left_eye_img(0, factor=1.7)
+cat['right_eye_bb']   # cats.right_eye_bb(0, factor=1.7)
+cat['right_eye_img']  # cats.right_eye_img(0, factor=1.7)
+cat['nose']           # cats.nose(0, factor=1.7)
+cat['nose_bb']        # cats.nose_bb(0, factor=1.7)
+cat['nose_img']       # cats.nose_img(0, factor=1.7)
+cat['ear']            # cats.ear(0, factor=1.7)
+cat['left_ear_bb']    # cats.left_ear_bb(0, factor=1.7)
+cat['left_ear_img']   # cats.left_ear_img(0, factor=1.7)
+cat['right_ear_bb']   # cats.right_ear_bb(0, factor=1.7)
+cat['right_ear_img']  # cats.right_ear_img(0, factor=1.7)
+```
+left dict form is much more intuitive and good 
+when you have to handle many of features at same time.
+right method way is good when you access specific data type.
+
+
+1. updated `purrsong\datasets\cats.py`
+2. change `purrsong.__init__.py` version (__version__ = '0.1.6')
+3. `python setup.py bdist_wheel` (creates new .whl)
+4. `twine upload dist\purrsong-0.1.6-py3-none-any.whl`
+5. git push
+6. `pip install --upgrade purrsong`
+
+
+# cats dataset feature update 2019-08-25
+
+## (minor)changed image array from BGR to RGB
+## new feature `purrsong.datasets.cats.Cats.face`
+with landmark datea, this method returns face image array, with given factor
+
+### How to use
+```python
+import purrsong as ps
+cats = ps.load_cats()
+cats.face(0)
+>>> # np.array img
+cats.face(0, factor=1)
+>>> # np.array img with tightly bounded to landmark
+```
+
+1. updated `purrsong\datasets\cats.py`
+2. change `purrsong.__init__.py` version (__version__ = '0.1.5')
+3. `python setup.py bdist_wheel` (creates new .whl)
+4. `twine upload dist\purrsong-0.1.5-py3-none-any.whl`
+5. git push
+6. `pip install --upgrade purrsong`
+
+
+
+# 2019-08-25
+### 0. relaced cats dataset
+#### if previous data exists do below
+```python 
+import purrsong as ps
+ps.list_datasets(fresh=True)
+ps.load_cats(fresh=True)
+```
+
+#### handling dataset
+```python
+import purrsong as ps
+
+cats = ps.load_cats()
+# tatal data num
+len(cats)
+
+# index 0 data
+cats[0]['image']
+cats[0]['landmark']
+
+# same with above
+cats.image(0)
+cats.landmark(0)
+```
+
+### 1. Version upgraded to 0.1.0 since new functions added
+
+1. added `cats.py`
+2. change `purrsong.__init__.py` version (__version__ = '0.1.4')
+3. `python setup.py bdist_wheel` (creates new .whl)
+4. `twine upload dist\purrsong-0.1.4-py3-none-any.whl`
+5. git push
+6. `pip install --upgrade purrsong`
+
+
+# 2019-08-21
+### 0. Generalized datasets, models module.
+#### 0.1. Created google dirve json files
+`google_drive_datasets.json`, `and google_drive_models.json` added.
+Adding new datasets or model in this list will be able to download and load easily.
+
+#### 0.2. Changed method. no jsonfiles.
+
+### 1. Fully automatic monitoring of models, datasets upload in google drive.
+#### 1.1. google drive monitoring spreadsheet.
+
+below codes edits `datasets_list.csv` file by list up all files in 
+datasets folder in google drive, by monitoring with spreadsheet scripts in
+every 1min interval.
+
+```javascript
+function listDir() {
+  var folderName = 'datasets';
+  var folder = DriveApp.getFoldersByName(folderName).next();
+  var files = folder.getFiles();
+  var sheet = SpreadsheetApp.getActiveSheet();
+  sheet.clear()
+  
+  var file;
+  var name;
+  var fileName;
+  var fileId;
+  
+  sheet.appendRow(['name', 'filename', 'id']);
+  while(files.hasNext()){
+    file = files.next();
+    fileName = file.getName();
+    name = fileName.split('.')[0]
+    fileId = file.getId();
+    sheet.appendRow([name, fileName, fileId]);
+  }
+  
+  
+  var purrsongFolder = DriveApp.getFoldersByName('purrsong').next();
+  var csvFile = convertRangeToCsvFile_(fileName, sheet);
+  var csvFileName = folderName+'_list.csv';
+  var csvFiles = purrsongFolder.getFilesByName(csvFileName);
+  if(csvFiles.hasNext()){
+      csvFiles.next().setContent(csvFile);
+  }
+
+};
+
+function convertRangeToCsvFile_(csvFileName, sheet) {
+  // get available data range in the spreadsheet
+  var activeRange = sheet.getDataRange();
+  try {
+    var data = activeRange.getValues();
+    var csvFile = undefined;
+
+    // loop through the data in the range and build a string with the csv data
+    if (data.length > 1) {
+      var csv = "";
+      for (var row = 0; row < data.length; row++) {
+        for (var col = 0; col < data[row].length; col++) {
+          if (data[row][col].toString().indexOf(",") != -1) {
+            data[row][col] = "\"" + data[row][col] + "\"";
+          }
+        }
+
+        // join each row's columns
+        // add a carriage return to end of each row, except for the last one
+        if (row < data.length-1) {
+          csv += data[row].join(",") + "\r\n";
+        }
+        else {
+          csv += data[row];
+        }
+      }
+      csvFile = csv;
+    }
+    return csvFile;
+  }
+  catch(err) {
+    Logger.log(err);
+    Browser.msgBox(err);
+  }
+}
+```
+
+#### 1.2. Usage
+1. Add `*.tar.gz` dataset to google drive `purrsong/datasets` folder
+2. Add `*.h5` model to google drive `purrsong/models` folder
+3. wait few minutes since list is updated every 1min
+4. check available datasets or models by
+```python
+import purrsong as ps
+ps.list_datasets()
+ps.list_models()
+```
+5. load datasets, or models
+```python
+import purrsong as ps
+data = ps.load_dataset('cat')
+bbs = ps.load_model('bbs')
+```
+### 2. Version upgraded to 0.1.1
+
+1. added fully automated google drive dataset model monitoring system
+2. change `purrsong.__init__.py` version (__version__ = '0.1.1')
+3. `python setup.py bdist_wheel` (creates new .whl)
+4. `twine upload dist\purrsong-0.1.1-py3-none-any.whl`
+5. git push
+6. `pip install --upgrade purrsong`
+
+### 3. Version upgraded to 0.1.2 (hotfix)
+
+1. minor things changed
+2. change `purrsong.__init__.py` version (__version__ = '0.1.2')
+3. `python setup.py bdist_wheel` (creates new .whl)
+4. `twine upload dist\purrsong-0.1.2-py3-none-any.whl`
+5. git push
+6. `pip install --upgrade purrsong`
+
+### 4. added method `extract` in `purrsong>utils>extractor.py`
+
+```python
+def extract(src, cleanup_src=True):
+    """Extract file by infer
+    
+    :param src: .zip|.tar|.tar.gz|.tar.bz2|.tar.xz file
+    :type src: str
+    :param cleanup_src: if True, remove src file after extraction
+    :type cleanup_src: bool
+    :returns: True if extract completed
+    """
+    extract_done = False
+    if zipfile.is_zipfile(src):
+        extract_done = extract_zip(src)
+    elif tarfile.is_tarfile(src):
+        extract_done = extract_tar(src)
+    if cleanup_src and extract_done:
+        os.remove(src)
+    return extract_done
+```
+
+### 5. Version upgraded to 0.1.3 (hotfix)
+
+1. minor things changed
+2. change `purrsong.__init__.py` version (__version__ = '0.1.3')
+3. `python setup.py bdist_wheel` (creates new .whl)
+4. `twine upload dist\purrsong-0.1.3-py3-none-any.whl`
+5. git push
+6. `pip install --upgrade purrsong`
+
+### 6. git branch merge when behind of master
+[link](https://stackoverflow.com/questions/34118404/what-i-can-do-to-resolve-1-commit-behind-master)
+```git
+git checkout master
+git pull 
+git checkout develop
+git merge master
+git push
+```
+
+
+
 # 2019-08-19
 ### 0. Created functions for datasets or modelsets
 #### 0.1. `datasets`, `modelsets`, `utils` folder added
@@ -56,6 +327,15 @@ git branch test # branch create
 git checkout test # set to test branch
 git commit # test branch commit
 git push # test branch push
+```
+
+### 3. working with git branch
+#### 3.1. 
+```git
+git branch develop
+git checkout develop
+git commit
+git push
 ```
 
 # 2019-08-18

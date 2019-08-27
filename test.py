@@ -1,8 +1,10 @@
 import purrsong as ps
+import matplotlib.pyplot as plt
 
-data = ps.load_cats()
-bbs = ps.load_bbs()
-lmks = ps.load_lmks()
-print(data)
-print(bbs)
-print(lmks)
+if __name__ == "__main__":
+    cats = ps.load_cats()
+    img = cats.right_ear_img(44)
+    plt.imshow(img)
+    plt.show()
+    
+    
