@@ -121,11 +121,11 @@ right method way is good when you access specific feature.
 ```python
 
     content_path = ".../cat.jpg"
-    style_path = ".../awesome_style.jpg"
-    dst = ".../cat"
-    st = ps.StyleTransfer(content_path, style_path, dst, 
-                          iterations=20, content_weight=0.25, style_weight=1.5, 
-                          total_variation_weight=1e-4, img_height=400)
+    style_path   = ".../awesome_style.jpg"
+    dst          = ".../cat"
+    st           = ps.StyleTransfer(content_path, style_path, dst, 
+                                    iterations=20, content_weight=0.25, style_weight=1.5, 
+                                    total_variation_weight=1e-4, img_height=400)
     st.transfer_image()
     
 ```
