@@ -129,5 +129,13 @@ right method way is good when you access specific feature.
     st.transfer_image()
     
 ```
+#### Load User Image
+```python
+    
+    from purrsong.utils import load_user_image
+    
+    image_path = ".../cat.jpg"
+    load_user_image(image_path)
 
+```
 
