@@ -20,6 +20,8 @@ import numpy as np
 import cv2
 from tqdm import tqdm
 
+from purrsong.utils import load_user_image
+
 # content Loss에 사용되는 Layer
 CONTENT_LAYER = 'block5_conv2'
 
@@ -72,8 +74,8 @@ class StyleTransfer:
     """
     
     def __init__(self, content_path, style_path, dst=None, iterations=20, content_weight=0.25, style_weight=1.5, total_variation_weight=1e-4, img_height=400):
-        self.content_img            = self.read_image(content_path)
-        self.style_img              = self.read_image(style_path)
+        self.content_img            = load_user_image(content_path)
+        self.style_img              = load_user_image(style_path)
         self.dst                    = dst
         self.iterations             = iterations
         self.style_weight           = style_weight
