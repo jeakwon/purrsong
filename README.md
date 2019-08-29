@@ -128,7 +128,7 @@ st           = ps.StyleTransfer(content_path, style_path, dst,
 st.transfer_image()
 ```
 
-### Load User Image
+#### Load User Image
 ```python
 from purrsong.utils import load_user_image
 
